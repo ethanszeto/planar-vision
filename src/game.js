@@ -9,7 +9,10 @@ function start() {
 /**
  * Initial actions before
  */
-function initialize() {}
+function initialize() {
+  canvas = document.getElementById("canvas");
+  ctx = canvas.getContext("2d");
+}
 
 /**
  * One frame in the game
