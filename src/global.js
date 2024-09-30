@@ -14,7 +14,7 @@ var player;
 var camera;
 
 /* Game Presets */
-const playerSpeed = 480;
+const playerSpeed = 480; // player speed in pixels per second
 
 /* Calculation Presets */
 const t = 0.25;

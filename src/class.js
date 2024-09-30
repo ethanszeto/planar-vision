@@ -1,3 +1,6 @@
+/**
+ * The Base class for any game-related object.
+ */
 class Base {
   constructor(x, y) {
     this.x = x;
@@ -5,6 +8,9 @@ class Base {
   }
 }
 
+/** 
+ * A stationary circle object.
+ */
 class Circle extends Base {
   constructor(x, y, radius, color) {
     super(x, y);
@@ -12,6 +18,9 @@ class Circle extends Base {
     this.color = color;
   }
 
+  /**
+   * Draws the circle
+   */
   draw() {
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.radius, 0, 2 * Math.PI);
@@ -19,6 +28,10 @@ class Circle extends Base {
     ctx.fill();
   }
 
+  /**
+   * Translates the circle so it remains stationary relative to the camera position.
+   * Draws the circle in place. 
+   */
   update() {
     ctx.save();
     ctx.translate(-camera.x + canvas.width / 2, -camera.y + canvas.height / 2);
@@ -29,6 +42,9 @@ class Circle extends Base {
   }
 }
 
+/**
+ * A stationary box object.
+ */
 class Box extends Base {
   constructor(x, y, width, height, color) {
     super(x, y);
@@ -52,6 +68,9 @@ class Box extends Base {
   }
 }
 
+/**
+ * A Player object.
+ */
 class Player extends Circle {
   update() {
     super.update();
@@ -60,6 +79,9 @@ class Player extends Circle {
   }
 }
 
+/**
+ * A Camera object.
+ */
 class Camera extends Circle {
   constructor(x = 0, y = 0, radius = 0, color = rgba(0, 0, 0, 0)) {
     super(x, y, radius, color);
