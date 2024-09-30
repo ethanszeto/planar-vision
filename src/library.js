@@ -10,20 +10,33 @@ function bezier(t, p0, p1, p2, p3) {
   return p0 * (1 - t) ** 3 + p1 * 3 * (1 - t) ** 2 * t + p2 * 3 * (1 - t) * t ** 2 + p3 * t ** 3;
 }
 
-function calculatePlayerMovement() {
+/**
+ * Calculates the single-frame speed of an object given 
+ * the framerate-independent speed in pixels per second
+ * and the amount of time after the last frame in milliseconds
+ * 
+ * @param {Number} pxps pixels per second 
+ * @param {Number} dt delta time (ms)
+ * @returns 
+ */
+function speed(pxps, dt) {
+  return (pxps / 1000) * dt;
+}
+
+function calculatePlayerMovement(dt) {
   player.speedX = 0;
   player.speedY = 0;
   if (keys["a"]) {
-    player.speedX = -playerSpeed;
+    player.speedX = -speed(playerSpeed, dt);
   }
   if (keys["d"]) {
-    player.speedX = playerSpeed;
+    player.speedX = speed(playerSpeed, dt);
   }
   if (keys["w"]) {
-    player.speedY = -playerSpeed;
+    player.speedY = -speed(playerSpeed, dt);
   }
   if (keys["s"]) {
-    player.speedY = playerSpeed;
+    player.speedY = speed(playerSpeed, dt);
   }
 }
 

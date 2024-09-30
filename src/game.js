@@ -31,7 +31,7 @@ function frame(time) {
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  calculatePlayerMovement();
+  calculatePlayerMovement(dt);
   calculatePlayerWallCollisions(stageOneWalls);
 
   for (const wall of stageOneWalls) {
