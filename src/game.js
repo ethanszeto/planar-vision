@@ -33,6 +33,7 @@ function frame(time) {
 
   calculatePlayerMovement(dt);
   calculatePlayerWallCollisions(stageOneWalls);
+  playerAttack();
 
   for (const wall of stageOneWalls) {
     wall.update();

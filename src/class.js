@@ -43,6 +43,32 @@ class Circle extends Base {
 }
 
 /**
+ * A Player object.
+ */
+class Player extends Circle {
+  update() {
+    super.update();
+    this.x += this.speedX;
+    this.y += this.speedY;
+  }
+}
+
+/**
+ * A Camera object.
+ */
+class Camera extends Circle {
+  constructor(x = 0, y = 0, radius = 0, color = rgba(0, 0, 0, 0)) {
+    super(x, y, radius, color);
+  }
+
+  update() {
+    super.update();
+    camera.x = bezier(t, camera.x, camera.x + (player.x - camera.x) * 0.5, camera.x + (player.x - camera.x) * 0.5, player.x);
+    camera.y = bezier(t, camera.y, camera.y + (player.y - camera.y) * 0.5, camera.y + (player.y - camera.y) * 0.5, player.y);
+  }
+}
+
+/**
  * A stationary box object.
  */
 class Box extends Base {
@@ -68,28 +94,10 @@ class Box extends Base {
   }
 }
 
-/**
- * A Player object.
- */
-class Player extends Circle {
-  update() {
-    super.update();
-    this.x += this.speedX;
-    this.y += this.speedY;
-  }
-}
-
-/**
- * A Camera object.
- */
-class Camera extends Circle {
-  constructor(x = 0, y = 0, radius = 0, color = rgba(0, 0, 0, 0)) {
-    super(x, y, radius, color);
-  }
-
-  update() {
-    super.update();
-    camera.x = bezier(t, camera.x, camera.x + (player.x - camera.x) * 0.5, camera.x + (player.x - camera.x) * 0.5, player.x);
-    camera.y = bezier(t, camera.y, camera.y + (player.y - camera.y) * 0.5, camera.y + (player.y - camera.y) * 0.5, player.y);
+class BreakableBox extends Box {
+  constructor(x, y, width, height, color, maxHp) {
+    super(x, y, width, height, color);
+    this.maxHp = maxHp;
+    this.hp = maxHp;
   }
 }

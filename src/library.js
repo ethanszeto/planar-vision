@@ -99,3 +99,10 @@ function calculatePlayerWallCollisions(walls) {
     }
   }
 }
+
+function playerAttack() {
+  if(mouse.pressed){
+    //circle in the direction of the mouse, offset by some reach value
+    const melee = new Circle();
+  }
+}
