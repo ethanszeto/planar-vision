@@ -8,7 +8,7 @@ class Base {
   }
 }
 
-/** 
+/**
  * A stationary circle object.
  */
 class Circle extends Base {
@@ -30,7 +30,7 @@ class Circle extends Base {
 
   /**
    * Translates the circle so it remains stationary relative to the camera position.
-   * Draws the circle in place. 
+   * Draws the circle in place.
    */
   update() {
     ctx.save();
@@ -61,6 +61,7 @@ class Camera extends Circle {
     super(x, y, radius, color);
   }
 
+  // TODO: Fix to account for framerate (incorporate dt into camera movement?)
   update() {
     super.update();
     camera.x = bezier(t, camera.x, camera.x + (player.x - camera.x) * 0.5, camera.x + (player.x - camera.x) * 0.5, player.x);

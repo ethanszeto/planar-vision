@@ -1,11 +1,11 @@
 /**
  * Returns an rgba string
- * 
- * @param {Number} r 
- * @param {Number} g 
- * @param {Number} b 
- * @param {Number} a 
- * @returns 
+ *
+ * @param {Number} r
+ * @param {Number} g
+ * @param {Number} b
+ * @param {Number} a
+ * @returns
  */
 const rgba = (r, g, b, a) => {
   return `rgba(${r}, ${g}, ${b}, ${a})`;
@@ -13,11 +13,11 @@ const rgba = (r, g, b, a) => {
 
 /**
  * Calculates the linear interpolation between two numbers
- * 
- * @param {Number} start 
- * @param {Number} end 
- * @param {Number} t 
- * @returns 
+ *
+ * @param {Number} start
+ * @param {Number} end
+ * @param {Number} t
+ * @returns
  */
 function lerp(start, end, t) {
   return start + (end - start) * t;
@@ -25,26 +25,26 @@ function lerp(start, end, t) {
 
 /**
  * Calculates a point on a cubic bezier curve
- * 
- * @param {Number} t 
- * @param {Number} p0 
- * @param {Number} p1 
- * @param {Number} p2 
- * @param {Number} p3 
- * @returns 
+ *
+ * @param {Number} t
+ * @param {Number} p0
+ * @param {Number} p1
+ * @param {Number} p2
+ * @param {Number} p3
+ * @returns
  */
 function bezier(t, p0, p1, p2, p3) {
   return p0 * (1 - t) ** 3 + p1 * 3 * (1 - t) ** 2 * t + p2 * 3 * (1 - t) * t ** 2 + p3 * t ** 3;
 }
 
 /**
- * Calculates the single-frame speed of an object given 
+ * Calculates the single-frame speed of an object given
  * the framerate-independent speed in pixels per second
  * and the amount of time after the last frame in milliseconds
- * 
- * @param {Number} pxps pixels per second 
+ *
+ * @param {Number} pxps pixels per second
  * @param {Number} dt delta time (ms)
- * @returns 
+ * @returns
  */
 function speed(pxps, dt) {
   return (pxps / 1000) * dt;
@@ -53,8 +53,8 @@ function speed(pxps, dt) {
 /**
  * Calculates the single-frame speed of a the Player given
  * the amount of time after the last frame in milliseconds
- * 
- * @param {Number} dt 
+ *
+ * @param {Number} dt
  */
 function calculatePlayerMovement(dt) {
   player.speedX = 0;
@@ -76,8 +76,8 @@ function calculatePlayerMovement(dt) {
 /**
  * Moves the player back the exact amount and direction of
  * overlap from a given list of walls.
- * 
- * @param {Array} walls 
+ *
+ * @param {Array} walls
  */
 function calculatePlayerWallCollisions(walls) {
   for (const wall of walls) {
@@ -101,8 +101,26 @@ function calculatePlayerWallCollisions(walls) {
 }
 
 function playerAttack() {
-  if(mouse.pressed){
-    //circle in the direction of the mouse, offset by some reach value
-    const melee = new Circle();
+  if (mouse.pressed) {
+    const playerCameraOffsetX = camera.x - player.x;
+    const playerCameraOffsetY = camera.y - player.y;
+
+    const playerViewportPosX = canvas.width / 2 - playerCameraOffsetX;
+    const playerViewportPosY = canvas.height / 2 - playerCameraOffsetY;
+
+    const playerMouseDistanceX = mouse.x - playerViewportPosX;
+    const playerMouseDistanceY = mouse.y - playerViewportPosY;
+
+    const playerMouseDistance = Math.hypot(playerMouseDistanceX, playerMouseDistanceY);
+
+    const normX = playerMouseDistanceX / playerMouseDistance;
+    const normY = playerMouseDistanceY / playerMouseDistance;
+
+    const meleeAttackX = player.x + normX * meleeAttackReach;
+    const meleeAttackY = player.y + normY * meleeAttackReach;
+
+    const meleeAttack = new Circle(meleeAttackX, meleeAttackY, meleeAttackReach, rgba(100, 0, 0, 1));
+
+    meleeAttack.update();
   }
 }
